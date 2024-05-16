@@ -1,0 +1,796 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE MudletPackage>
+<MudletPackage version="1.001">
+	<TriggerPackage>
+		<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+			<name>petria</name>
+			<script></script>
+			<triggerType>0</triggerType>
+			<conditonLineDelta>0</conditonLineDelta>
+			<mStayOpen>0</mStayOpen>
+			<mCommand></mCommand>
+			<packageName></packageName>
+			<mFgColor>#ff0000</mFgColor>
+			<mBgColor>#ffff00</mBgColor>
+			<mSoundFile></mSoundFile>
+			<colorTriggerFgColor>#000000</colorTriggerFgColor>
+			<colorTriggerBgColor>#000000</colorTriggerBgColor>
+			<regexCodeList />
+			<regexCodePropertyList />
+			<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+				<name>speller</name>
+				<script></script>
+				<triggerType>0</triggerType>
+				<conditonLineDelta>0</conditonLineDelta>
+				<mStayOpen>0</mStayOpen>
+				<mCommand></mCommand>
+				<packageName></packageName>
+				<mFgColor>#ff0000</mFgColor>
+				<mBgColor>#ffff00</mBgColor>
+				<mSoundFile></mSoundFile>
+				<colorTriggerFgColor>#000000</colorTriggerFgColor>
+				<colorTriggerBgColor>#000000</colorTriggerBgColor>
+				<regexCodeList />
+				<regexCodePropertyList />
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>singleSpell</name>
+					<script>local ps = petria.speller
+local option = matches[3]
+local target = matches[2]
+
+ps.singleSpell(option, target)
+
+</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^(\w+) dice '(\w+)'$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>fullSpells</name>
+					<script>local ps = petria.speller
+target = matches[2]
+
+ps.fullSpells(target)</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^(\w+) dice 'full spells'$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+			</TriggerGroup>
+			<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+				<name>chatLog</name>
+				<script></script>
+				<triggerType>0</triggerType>
+				<conditonLineDelta>0</conditonLineDelta>
+				<mStayOpen>0</mStayOpen>
+				<mCommand></mCommand>
+				<packageName></packageName>
+				<mFgColor>#ff0000</mFgColor>
+				<mBgColor>#ffff00</mBgColor>
+				<mSoundFile></mSoundFile>
+				<colorTriggerFgColor>#000000</colorTriggerFgColor>
+				<colorTriggerBgColor>#000000</colorTriggerBgColor>
+				<regexCodeList />
+				<regexCodePropertyList />
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>chatsLog</name>
+					<script>selectCurrentLine()
+copy()
+chats_container_miniconsole:echo("["..getTime(true, "ddd MM hh:mm:ss").."] ")
+chats_container_miniconsole:appendBuffer()</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^(\w+) declama cual poeta: '(.*)'$</string>
+						<string>^(\w+) pregunta (.*)$</string>
+						<string>^(\w+) grita (.*)$</string>
+						<string>^\[IMP:(\w+)\] (.*)$</string>
+						<string>^\[CLAN:(\w+)\] (.*)$</string>
+						<string>^(\w+) berrea a lo bestia (.*)$</string>
+						<string>^(\w+) chilla (.*)$</string>
+						<string>^\[(\w+)\:(\w+)\] (.*)$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>clan_colors</name>
+					<script></script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^\[(\w+):(\w+)\] \'(.*)\'$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+			</TriggerGroup>
+			<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+				<name>idle</name>
+				<script></script>
+				<triggerType>0</triggerType>
+				<conditonLineDelta>0</conditonLineDelta>
+				<mStayOpen>0</mStayOpen>
+				<mCommand></mCommand>
+				<packageName></packageName>
+				<mFgColor>#ff0000</mFgColor>
+				<mBgColor>#ffff00</mBgColor>
+				<mSoundFile></mSoundFile>
+				<colorTriggerFgColor>#000000</colorTriggerFgColor>
+				<colorTriggerBgColor>#000000</colorTriggerBgColor>
+				<regexCodeList />
+				<regexCodePropertyList />
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>Idle</name>
+					<script>send("\n")</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^Has sido transportado al ciberespacio.$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="yes" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>hambre_sed</name>
+					<script>beberFuente()</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^Notas que se te esta resecando la garganta.$</string>
+						<string>^Notas un agujero en el estomago.$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+				<Trigger isActive="no" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>hambre_sed_mas</name>
+					<script> beberFuente()</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^Estas sediento.$</string>
+						<string>^Tienes hambre.$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+			</TriggerGroup>
+		</TriggerGroup>
+	</TriggerPackage>
+	<TimerPackage />
+	<AliasPackage>
+		<AliasGroup isActive="yes" isFolder="yes">
+			<name>echo</name>
+			<script></script>
+			<command></command>
+			<packageName>echo</packageName>
+			<regex></regex>
+			<Alias isActive="yes" isFolder="no">
+				<name>`echo</name>
+				<script>local s = matches[2]
+
+s = string.gsub(s, "%$", "\n")
+feedTriggers("\n" .. s .. "\n")
+echo("\n")</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>`echo (.+)</regex>
+			</Alias>
+			<Alias isActive="yes" isFolder="no">
+				<name>`cecho</name>
+				<script>local s = matches[2]
+
+s = string.gsub(s, "%$", "\n")
+cfeedTriggers("\n" .. s .. "\n")
+echo("\n")</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>`cecho (.+)</regex>
+			</Alias>
+			<Alias isActive="yes" isFolder="no">
+				<name>`decho</name>
+				<script>local s = matches[2]
+
+s = string.gsub(s, "%$", "\n")
+dfeedTriggers("\n" .. s .. "\n")
+echo("\n")</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>`decho (.+)</regex>
+			</Alias>
+			<Alias isActive="yes" isFolder="no">
+				<name>`hecho</name>
+				<script>local s = matches[2]
+
+s = string.gsub(s, "%$", "\n")
+hfeedTriggers("\n" .. s .. "\n")
+echo("\n")</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>`hecho (.+)</regex>
+			</Alias>
+		</AliasGroup>
+		<AliasGroup isActive="yes" isFolder="yes">
+			<name>run-lua-code-v4</name>
+			<script></script>
+			<command></command>
+			<packageName>run-lua-code-v4</packageName>
+			<regex></regex>
+			<Alias isActive="yes" isFolder="no">
+				<name>run lua code</name>
+				<script>local f, e = loadstring("return "..matches[2])
+if not f then
+  f, e = assert(loadstring(matches[2]))
+end
+
+local r =
+  function(...)
+    if not table.is_empty({...}) then
+      display(...)
+    end
+  end
+r(f())</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>^lua (.*)$</regex>
+			</Alias>
+		</AliasGroup>
+		<AliasGroup isActive="yes" isFolder="yes">
+			<name>petria</name>
+			<script></script>
+			<command></command>
+			<packageName></packageName>
+			<regex></regex>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>detectivos</name>
+				<script>send("cast 'detectar invis'")
+send("cast 'detectar oc'")
+send("cast 'detectar mal'")</script>
+				<command></command>
+				<packageName></packageName>
+				<regex>visiones</regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>fireproof</name>
+					<script>echo("---&gt; Fireproof mode on. Protecting ["..matches[2].."] potions\n")
+for num = 1, matches[2], 1 do
+    send("ca antifuego "..i.."."..matches[3])
+end</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^fp (\d+) (\w+)$</regex>
+				</Alias>
+			</AliasGroup>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>PK</name>
+				<script></script>
+				<command></command>
+				<packageName></packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>ChooseVictim</name>
+					<script>echo("Ahora tu víctima es: "..matches[2])</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^pk (\w+)$</regex>
+				</Alias>
+			</AliasGroup>
+			<AliasGroup isActive="yes" isFolder="yes">
+				<name>mapper</name>
+				<script></script>
+				<command></command>
+				<packageName></packageName>
+				<regex></regex>
+				<Alias isActive="yes" isFolder="no">
+					<name>roomInfo</name>
+					<script>petria.mapper.roomInfo()</script>
+					<command></command>
+					<packageName></packageName>
+					<regex>^room info$</regex>
+				</Alias>
+			</AliasGroup>
+		</AliasGroup>
+	</AliasPackage>
+	<ActionPackage />
+	<ScriptPackage>
+		<ScriptGroup isActive="yes" isFolder="yes">
+			<name>petria</name>
+			<packageName></packageName>
+			<script> petria = petria or {}
+ petria.cmd = nil</script>
+			<eventHandlerList />
+			<ScriptGroup isActive="yes" isFolder="yes">
+				<name>Gui</name>
+				<packageName></packageName>
+				<script>petria.gui = petria.gui or {}</script>
+				<eventHandlerList />
+				<Script isActive="yes" isFolder="no">
+					<name>cmdLine</name>
+					<packageName></packageName>
+					<script>setCmdLineStyleSheet("main", [[
+  QPlainTextEdit {
+    border-width: 1px;
+    border-style: solid;
+    border-color: teal;
+    border-radius: 5;
+    font-size:12px;
+    height: 10px;
+  }
+]])</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>scrollbar</name>
+					<packageName></packageName>
+					<script>local grey = "#31363b"
+local blue = "#2478c8"
+local black = "#000000"
+setAppStyleSheet([[
+  QScrollBar:vertical {
+     background: ]]..black..[[;
+     margin: 9px 0 9px 0;
+		 border-radius: 7px;
+  }
+  QScrollBar:vertical:hover {
+     background: ]]..grey..[[;
+  }
+  QScrollBar::handle:vertical {
+     background-color: ]]..grey..[[;
+     min-height: 20px;
+     border-width: 4px;
+     border-style: solid;
+     border-color: ]]..black..[[;
+     border-radius: 7px;
+  }
+  QScrollBar::handle:vertical:hover {
+     background-color: ]]..blue..[[;
+     border-width: 1px;
+  }
+  QScrollBar::add-line:vertical {
+    background-color: #000000;
+    height: 1px;
+    subcontrol-position: bottom;
+    subcontrol-origin: margin;
+  }
+  QScrollBar::sub-line:vertical {
+    background-color: #000000;
+    height: 1px;
+    subcontrol-position: top;
+    subcontrol-origin: margin;
+  }
+  QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical {
+    background: none;
+  }
+  QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+  }
+]])</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>chatsContainer</name>
+					<packageName></packageName>
+					<script>chats_container = chats_container or Adjustable.Container:new({
+  name="chatsContainer",
+  titleText="Chat Log",
+  x="-49%", y=0,
+  width="49%", height="20%",
+  autoLoad=false,
+ })
+ 
+ chats_container:attachToBorder("right")
+ chats_container:connectToBorder("right")
+ 
+chats_container_miniconsole = Geyser.MiniConsole:new({
+  name="chatsContainerMiniconsole",
+  x=0, y=4,
+  width="100%", height="100%",
+  autoWrap=true,
+  setWindowWrap="100%",
+  color="black",
+  scrollBar=true,
+  fontSize=8,
+  font="xos4 Terminus"
+ }, chats_container)</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>statsWindow</name>
+					<packageName></packageName>
+					<script>statsWindow = stats_window or Adjustable.Container:new({
+  name="stats_window",
+  titleText="Stats Window",
+  x="-35%", y="62%",
+  width="12%", height="38%",
+  autoLoad=false,
+ })
+ 
+statsWindowMiniconsole = Geyser.MiniConsole:new({
+  name="stats_window_miniconsole",
+  x=0, y=4,
+  width="100%", height="100%",
+  color="black",
+  fontSize=8,
+  font="xos4 Terminus",
+  },statsWindow)</script>
+					<eventHandlerList />
+				</Script>
+			</ScriptGroup>
+			<ScriptGroup isActive="yes" isFolder="yes">
+				<name>speller</name>
+				<packageName></packageName>
+				<script>petria.speller = petria.speller or {}</script>
+				<eventHandlerList />
+				<Script isActive="yes" isFolder="no">
+					<name>spellsList</name>
+					<packageName></packageName>
+					<script>local ps = petria.speller
+
+ps.buffs = {
+    "santuario",
+    "escudo",
+    "proteccion",
+    "bendecir",
+    "acelerar",
+    "fuerza colosal",
+    "volar",
+    "delirar"
+}</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>castSpells</name>
+					<packageName></packageName>
+					<script>local ps = petria.speller
+
+function ps.singleSpell(spell, target)
+    if table.contains(ps.buffs, spell) then
+        send("cast \'"..spell.."\' "..target)
+    else
+        send("decir Ese spell no se lo vengo manejando, joven.")
+    end
+end
+
+function ps.fullSpells(target)
+    for _, v in pairs(ps.buffs) do
+        send("cast \'"..v.."\' "..target)
+    end
+end</script>
+					<eventHandlerList />
+				</Script>
+			</ScriptGroup>
+			<ScriptGroup isActive="yes" isFolder="yes">
+				<name>gmcp</name>
+				<packageName></packageName>
+				<script>petria.gmcp = petria.gmcp or {}
+petria.gmcp.fullInfo = false</script>
+				<eventHandlerList />
+				<Script isActive="yes" isFolder="no">
+					<name>populateStatsWindow</name>
+					<packageName></packageName>
+					<script>function populateStatsWindow()
+
+local align = gmcp.Char.Worth.alignment
+local tnl = gmcp.Char.Worth.xptnl
+local gold = gmcp.Char.Worth.money
+local con = gmcp.Char.Stats.con
+local str = gmcp.Char.Stats.str
+local dex = gmcp.Char.Stats.dex
+local int = gmcp.Char.Stats.int
+local wis = gmcp.Char.Stats.wis
+local dr = gmcp.Char.Stats.damroll
+local hr = gmcp.Char.Stats.hitroll
+-- local maxcon = gmcp.char.maxstats.maxcon
+-- local maxstr = gmcp.char.maxstats.maxstr
+-- local maxdex = gmcp.char.maxstats.maxdex
+-- local maxluck = gmcp.char.maxstats.maxluck
+-- local maxint = gmcp.char.maxstats.maxint
+-- local maxwis = gmcp.char.maxstats.maxwis
+
+
+  
+statsWindowMiniconsole:clear()
+    
+statsWindowMiniconsole:echo("Str : [ "..str.."]\n")
+statsWindowMiniconsole:echo("Int : [ "..int.."]\n")
+statsWindowMiniconsole:echo("Wis : [ "..wis.."]\n")
+statsWindowMiniconsole:echo("Dex : [ "..dex.."]\n")
+statsWindowMiniconsole:echo("Con : [ "..con.."]\n")
+statsWindowMiniconsole:echo("DR  : [ "..dr.."]\n")
+statsWindowMiniconsole:echo("HR  : [ "..hr.."]\n\n")
+
+statsWindowMiniconsole:cecho("Gold    : [&lt;gold&gt;"..gold.."&lt;reset&gt;]\n\n")
+  
+statsWindowMiniconsole:echo("TNL     : [ "..tnl.."]\n")
+statsWindowMiniconsole:echo("Align   : ["..align.."]\n")
+end</script>
+					<eventHandlerList>
+						<string>gmcp.Char</string>
+					</eventHandlerList>
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>onInGame</name>
+					<packageName></packageName>
+					<script>function onInGame()
+    sendGMCP('Core.Supports.Set [ "Char 1", "Comm 1", "Room 1" ]')
+    petria.command = nil
+end</script>
+					<eventHandlerList>
+						<string>inGame</string>
+					</eventHandlerList>
+				</Script>
+			</ScriptGroup>
+			<ScriptGroup isActive="yes" isFolder="yes">
+				<name>mapper</name>
+				<packageName></packageName>
+				<script>mudlet = mudlet or {}
+mudlet.mapper_script = true
+petria.mapper = petria.mapper or {}</script>
+				<eventHandlerList />
+				<Script isActive="yes" isFolder="no">
+					<name>exitMap</name>
+					<packageName></packageName>
+					<script>petria.mapper.exitMap = {
+  [1] = "norte",
+  [2] = "noreste",
+  [3] = "noroeste",
+  [4] = "este",
+  [5] = "oeste",
+  [6] = "sur",
+  [7] = "sureste",
+  [8] = "suroeste",
+  [9] = "arriba",
+  [10] = "abajo",
+ }
+ 
+ petria.mapper.exitMapNum = {}
+for k, v in pairs(petria.mapper.exitMap) do
+  petria.mapper.exitMapNum[v] = k
+end
+
+ petria.mapper.exitMapShort = {
+  ["norte"] = "N",
+  ["noreste"] = "NE",
+  ["noroeste"] = "NO",
+  ["este"] = "E",
+  ["oeste"] = "O",
+  ["sur"] = "S",
+  ["sureste"] = "SE",
+  ["souroeste"] = "SO",
+  ["arriba"] = "Arr",
+  ["abajo"] = "Abj",
+}
+
+petria.mapper.exitMapLong = {}
+for k, v in pairs(petria.mapper.exitMapShort) do
+  petria.mapper.exitMapLong[v] = k
+end
+
+petria.mapper.reverseDir = {
+  ["N"] = "S",
+  ["S"] = "N",
+  ["E"] = "O",
+  ["O"] = "E",
+  ["NE"] = "SO",
+  ["NO"] = "SE",
+  ["Arr"] = "Abj",
+  ["Abj"] = "Arr",
+}</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>onRoom</name>
+					<packageName></packageName>
+					<script>local mmp = petria.mapper
+
+function onRoom()
+    mmp.prevRoom = mmp.info or {}
+    petria.mapper.info = {
+        vnum = gmcp.Room.Info.vnum,
+        area = gmcp.Room.Info.area,
+        name = gmcp.Room.Info.name,
+        exits = table.deepcopy(gmcp.Room.Info.exit),
+    }
+    
+    -- if mmp.connectedRooms(mmp.info.vnum, mmp.prevRoom.vnum) == true then
+    --     echo("Room \""..mmp.info.name.."\" and \""..mmp.prevRoom.name.."\" are connected both ways\n")
+    -- end
+end</script>
+					<eventHandlerList>
+						<string>gmcp.Room.Info</string>
+					</eventHandlerList>
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>roomFunctions</name>
+					<packageName></packageName>
+					<script>local mmp = petria.mapper
+
+-- Check if current and previous room are bidirectionally connected
+function mmp.connectedRooms(cvnum, pvnum)
+    cvnum = tonumber(mmp.info.vnum)
+    pvnum = tonumber(mmp.prevRoom.vnum)
+    
+    local bidirConnection = false
+    local exitToPrev = ""
+    local exitFromPrev = ""
+    
+    for k, v in pairs(mmp.info.exits) do
+        if tonumber(v) == pvnum then
+            exitToPrev = k
+        end
+    end
+    
+    for k, v in pairs(mmp.prevRoom.exits) do
+        if tonumber(v) == cvnum then
+            exitFromPrev = k
+        end     
+    end
+    
+    if  mmp.info.exits.exitToPrev == mmp.reverseDir.exitFromPrev then
+        bidirConnection = true
+    end
+    return bidirConnection
+end
+
+
+
+-- looks to see if there are doors in designated directions
+-- used for room comparison, can also be used for pathing purposes
+local function checkDoors(roomID, exits)
+    if type(exits) == "string" then exits = {exits} end
+    local statuses = {}
+    local doors = getDoors(roomID)
+    local dir
+    for k,v in pairs(exits) do
+        dir = short[k] or short[v]
+        if table.contains({'u','d'},dir) then
+            dir = exitmap[dir]
+        end
+        if not doors[dir] or doors[dir] == 0 then
+            return false
+        else
+            statuses[dir] = doors[dir]
+        end
+    end
+    return statuses
+end
+
+</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>roomInfo</name>
+					<packageName></packageName>
+					<script>local mmp = petria.mapper
+
+function mmp.plainRoomName(rname)
+    local plainText = string.gsub(rname, "{[a-zA-Z]", "")
+    return plainText
+end
+
+function mmp.displayRoomExits()
+    for k, v in pairs(mmp.info.exits) do
+        display(string.format("%3s: %2d", k, v))
+    end
+end
+
+function mmp.roomInfo()
+    echo("===============\n")
+    echo("Area name: \""..mmp.info.area.."\"\n")
+    echo("Room name: \""..mmp.plainRoomName(mmp.info.name).."\"\n")
+    echo("Room Vnum: \""..mmp.info.vnum.."\"\n")
+    echo("Exits:\n")
+    mmp.displayRoomExits()
+    echo("\n")
+    echo("Previous room: \""..mmp.plainRoomName(mmp.prevRoom.name).."\"\n")
+    echo("===============\n")
+end</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>creatingRooms</name>
+					<packageName></packageName>
+					<script>local mmp = petria.mapper
+
+-- list of possible movement directions and appropriate coordinate changes
+mmp.moveVectors = {
+    north = {0,1,0},
+    south = {0,-1,0},
+    east = {1,0,0},
+    west = {-1,0,0},
+    northwest = {-1,1,0},
+    northeast = {1,1,0},
+    southwest = {-1,-1,0},
+    southeast = {1,-1,0},
+    up = {0,0,1},
+    down = {0,0,-1}
+}</script>
+					<eventHandlerList />
+				</Script>
+			</ScriptGroup>
+		</ScriptGroup>
+	</ScriptPackage>
+	<KeyPackage />
+	<VariablePackage>
+		<HiddenVariables />
+	</VariablePackage>
+</MudletPackage>
