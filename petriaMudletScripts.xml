@@ -235,6 +235,73 @@ chats_container_miniconsole:appendBuffer()</script>
 					</regexCodePropertyList>
 				</Trigger>
 			</TriggerGroup>
+			<TriggerGroup isActive="yes" isFolder="yes" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+				<name>minimap</name>
+				<script>minimap_container_miniconsole:clear()</script>
+				<triggerType>0</triggerType>
+				<conditonLineDelta>0</conditonLineDelta>
+				<mStayOpen>99</mStayOpen>
+				<mCommand></mCommand>
+				<packageName></packageName>
+				<mFgColor>#ff0000</mFgColor>
+				<mBgColor>#ffff00</mBgColor>
+				<mSoundFile></mSoundFile>
+				<colorTriggerFgColor>#000000</colorTriggerFgColor>
+				<colorTriggerBgColor>#000000</colorTriggerBgColor>
+				<regexCodeList>
+					<string>{automapa}</string>
+				</regexCodeList>
+				<regexCodePropertyList>
+					<integer>3</integer>
+				</regexCodePropertyList>
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>minimapCapture</name>
+					<script>if matches[2]=="{automapa}" or matches[2]=="{/automapa}" then
+  deleteLine()
+else
+  selectCurrentLine()
+  copy()
+  minimap_container_miniconsole:appendBuffer()
+  deleteLine()
+end</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>^(.*)$</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>1</integer>
+					</regexCodePropertyList>
+				</Trigger>
+				<Trigger isActive="yes" isFolder="no" isTempTrigger="no" isMultiline="no" isPerlSlashGOption="no" isColorizerTrigger="no" isFilterTrigger="no" isSoundTrigger="no" isColorTrigger="no" isColorTriggerFg="no" isColorTriggerBg="no">
+					<name>minimapStopCapture</name>
+					<script>setTriggerStayOpen("minimap", 0)</script>
+					<triggerType>0</triggerType>
+					<conditonLineDelta>0</conditonLineDelta>
+					<mStayOpen>0</mStayOpen>
+					<mCommand></mCommand>
+					<packageName></packageName>
+					<mFgColor>#ff0000</mFgColor>
+					<mBgColor>#ffff00</mBgColor>
+					<mSoundFile></mSoundFile>
+					<colorTriggerFgColor>#000000</colorTriggerFgColor>
+					<colorTriggerBgColor>#000000</colorTriggerBgColor>
+					<regexCodeList>
+						<string>{/automapa}</string>
+					</regexCodeList>
+					<regexCodePropertyList>
+						<integer>3</integer>
+					</regexCodePropertyList>
+				</Trigger>
+			</TriggerGroup>
 		</TriggerGroup>
 	</TriggerPackage>
 	<TimerPackage />
@@ -497,23 +564,43 @@ statsWindowMiniconsole = Geyser.MiniConsole:new({
 				<Script isActive="yes" isFolder="no">
 					<name>mapperWindow</name>
 					<packageName></packageName>
-					<script>local mmp = petria.mapper
-
-mapperContainer = mapperContainer or Adjustable.Container:new({
-  name="mapper_container",
-  titleText = "Mapper",
+					<script>mapper_container = Adjustable.Container:new({
+  name="mapperContainer",
+  titleText="Mapper",
   x="-49%", y="20%",
-  width="24%", height="42%",
+  width="26%", height="42%",
+  autoLoad=false,
+})
+
+mapper_container_map = Geyser.Mapper:new({
+  name="mapperContainerMap",
+  x=0, y=4,
+  width="100%", height="100%",
+},mapper_container)
+
+lowerWindow("mapperContainer")</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>minimapContainer</name>
+					<packageName></packageName>
+					<script>minimap_container = minimap_container or Adjustable.Container:new({
+  name="minimapContainer",
+  titleText="Minimap",
+  x="-49%", y="62%",
+  width="14%", height="38%",
   autoLoad=false,
  })
-
-mapperWindow = Geyser.Mapper:new({
-    name = "PetriaMap",
-    dockPosition = "top",
-    x = "-100%", y = "100%",
-    width = "25%",
-    height = "30%",
-}, mapperContainer)</script>
+ 
+minimap_container_miniconsole = Geyser.MiniConsole:new({
+  name="minimapContainerMiniconsole",
+  x=0, y=0,
+  embedded = true,
+  width="100%", height="100%",
+  color="black",
+  font="xos4 Terminus",
+  fontSize=12,
+  },minimap_container)</script>
 					<eventHandlerList />
 				</Script>
 			</ScriptGroup>
@@ -702,13 +789,13 @@ function onRoom()
     mmp.info = {
         vnum = gmcp.Room.Info.vnum,
         area = gmcp.Room.Info.area,
-        name = gmcp.Room.Info.name,
+        name = mmp.plainRoomName(gmcp.Room.Info.name),
         exits = table.deepcopy(gmcp.Room.Info.exit),
     }
-        for k,v in pairs(mmp.info.exits) do
-            mmp.info.exits[k] = tonumber(v)
-        end
-        mmp.handleMove()
+    for k,v in pairs(mmp.info.exits) do
+        mmp.info.exits[k] = tonumber(v)
+    end
+    mmp.handleMove()
         
     if event == "shiftRoom" then
         local dir = mmp.exitMapLong[arg[1]] or arg[1]
@@ -814,16 +901,16 @@ end</script>
 
 -- list of possible movement directions and appropriate coordinate changes
 mmp.moveVectors = {
-    norte = {0,1,0},
-    sur = {0,-1,0},
-    este = {1,0,0},
-    oeste = {-1,0,0},
-    noroeste = {-1,1,0},
-    noreste = {1,1,0},
-    suroeste = {-1,-1,0},
-    sureste = {1,-1,0},
-    Arriba = {0,0,1},
-    Abajo = {0,0,-1}
+    N = {0,1,0},
+    S = {0,-1,0},
+    E = {1,0,0},
+    O = {-1,0,0},
+    NO = {-1,1,0},
+    NE = {1,1,0},
+    SO = {-1,-1,0},
+    SE = {1,-1,0},
+    Arr = {0,0,1},
+    Abj = {0,0,-1}
 }
 
 function mmp.makeRoom()
@@ -898,7 +985,7 @@ function mmp.handleMove()
         local stubs = getExitStubs1(info.vnum)
 		if stubs then
           for _, n in ipairs(stubs) do
-              local dir = mmp.exitMapLong[n]
+              local dir = mmp.exitMapShort[n]
               local id = info.exits[dir]
               -- need to see how special exits are represented to handle those properly here
               if id and getRoomName(id) then
