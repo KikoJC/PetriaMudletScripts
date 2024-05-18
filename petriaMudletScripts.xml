@@ -449,8 +449,8 @@ setAppStyleSheet([[
 				<Script isActive="yes" isFolder="no">
 					<name>chatsContainer</name>
 					<packageName></packageName>
-					<script>chats_container = chats_container or Adjustable.Container:new({
-  name="chatsContainer",
+					<script>chatsContainer = chatsContainer or Adjustable.Container:new({
+  name="chats_container",
   titleText="Chat Log",
   x="-49%", y=0,
   width="49%", height="20%",
@@ -476,7 +476,7 @@ chats_container_miniconsole = Geyser.MiniConsole:new({
 				<Script isActive="yes" isFolder="no">
 					<name>statsWindow</name>
 					<packageName></packageName>
-					<script>statsWindow = stats_window or Adjustable.Container:new({
+					<script>statsWindow = statsWindow or Adjustable.Container:new({
   name="stats_window",
   titleText="Stats Window",
   x="-35%", y="62%",
@@ -492,6 +492,29 @@ statsWindowMiniconsole = Geyser.MiniConsole:new({
   fontSize=8,
   font="xos4 Terminus",
   },statsWindow)</script>
+					<eventHandlerList />
+				</Script>
+				<Script isActive="yes" isFolder="no">
+					<name>mapperWindow</name>
+					<packageName></packageName>
+					<script>local mmp = petria.mapper
+
+mapperContainer = mapperContainer or Adjustable.Container:new({
+  name="mapper_container",
+  titleText = "Mapper",
+  x="-49%", y="21%",
+  width="24%", height="40%",
+  autoLoad=false,
+ })
+
+mapperWindow = Geyser.Mapper:new({
+    name = "PetriaMap",
+    embedded = true,
+    dockPosition = "floating",
+    x = "-49%", y = "21%",
+    width = "25%",
+    height = "30%",
+}, mapperContainer)</script>
 					<eventHandlerList />
 				</Script>
 			</ScriptGroup>
@@ -604,56 +627,69 @@ end</script>
 				<packageName></packageName>
 				<script>mudlet = mudlet or {}
 mudlet.mapper_script = true
-petria.mapper = petria.mapper or {}</script>
+petria.mapper = petria.mapper or {}
+petria.mapper.aliases = petria.mapper.aliases or {}
+
+local function config()
+    for k,v in pairs(mmp.aliases) do
+        killAlias(v)
+    end
+    mmp.aliases = {}
+    -- making an alias to let the user shift a room around via command line
+    table.insert(mmp.aliases,tempAlias([[^shift (\w+)$]],[[raiseEvent("shiftRoom",matches[2])]]))
+	table.insert(mmp.aliases,tempAlias([[^make_room$]],[[make_room()]]))
+end
+</script>
 				<eventHandlerList />
 				<Script isActive="yes" isFolder="no">
 					<name>exitMap</name>
 					<packageName></packageName>
-					<script>petria.mapper.exitMap = {
-  [1] = "norte",
-  [2] = "noreste",
-  [3] = "noroeste",
-  [4] = "este",
-  [5] = "oeste",
-  [6] = "sur",
-  [7] = "sureste",
-  [8] = "suroeste",
-  [9] = "arriba",
-  [10] = "abajo",
- }
+					<script>local mmp = petria.mapper
+mmp.exitMap = {
+    [1] = "norte",
+    [2] = "noreste",
+    [3] = "noroeste",
+    [4] = "este",
+    [5] = "oeste",
+    [6] = "sur",
+    [7] = "sureste",
+    [8] = "suroeste",
+    [9] = "arriba",
+    [10] = "abajo",
+}
  
- petria.mapper.exitMapNum = {}
-for k, v in pairs(petria.mapper.exitMap) do
-  petria.mapper.exitMapNum[v] = k
+mmp.exitMapNum = {}
+for k, v in pairs(mmp.exitMap) do
+    mmp.exitMapNum[v] = k
 end
 
- petria.mapper.exitMapShort = {
-  ["norte"] = "N",
-  ["noreste"] = "NE",
-  ["noroeste"] = "NO",
-  ["este"] = "E",
-  ["oeste"] = "O",
-  ["sur"] = "S",
-  ["sureste"] = "SE",
-  ["souroeste"] = "SO",
-  ["arriba"] = "Arr",
-  ["abajo"] = "Abj",
+ mmp.exitMapShort = {
+    ["norte"] = "N",
+    ["noreste"] = "NE",
+    ["noroeste"] = "NO",
+    ["este"] = "E",
+    ["oeste"] = "O",
+    ["sur"] = "S",
+    ["sureste"] = "SE",
+    ["souroeste"] = "SO",
+    ["arriba"] = "Arr",
+    ["abajo"] = "Abj",
 }
 
-petria.mapper.exitMapLong = {}
-for k, v in pairs(petria.mapper.exitMapShort) do
-  petria.mapper.exitMapLong[v] = k
+mmp.exitMapLong = {}
+for k, v in pairs(mmp.exitMapShort) do
+    mmp.exitMapLong[v] = k
 end
 
-petria.mapper.reverseDir = {
-  ["N"] = "S",
-  ["S"] = "N",
-  ["E"] = "O",
-  ["O"] = "E",
-  ["NE"] = "SO",
-  ["NO"] = "SE",
-  ["Arr"] = "Abj",
-  ["Abj"] = "Arr",
+mmp.reverseDir = {
+    ["N"] = "S",
+    ["S"] = "N",
+    ["E"] = "O",
+    ["O"] = "E",
+    ["NE"] = "SO",
+    ["NO"] = "SE",
+    ["Arr"] = "Abj",
+    ["Abj"] = "Arr",
 }</script>
 					<eventHandlerList />
 				</Script>
@@ -664,17 +700,28 @@ petria.mapper.reverseDir = {
 
 function onRoom()
     mmp.prevRoom = mmp.info or {}
-    petria.mapper.info = {
+    mmp.info = {
         vnum = gmcp.Room.Info.vnum,
         area = gmcp.Room.Info.area,
         name = gmcp.Room.Info.name,
         exits = table.deepcopy(gmcp.Room.Info.exit),
     }
-    
-    -- if mmp.connectedRooms(mmp.info.vnum, mmp.prevRoom.vnum) == true then
-    --     echo("Room \""..mmp.info.name.."\" and \""..mmp.prevRoom.name.."\" are connected both ways\n")
-    -- end
-end</script>
+        for k,v in pairs(mmp.info.exits) do
+            mmp.info.exits[k] = tonumber(v)
+        end
+        mmp.handleMove()
+        
+    if event == "shiftRoom" then
+        local dir = mmp.exitMapLong[arg[1]] or arg[1]
+        if not table.contains(exits, dir) then
+            echo("Error: Dirección inválida '" .. dir .. "'.")
+        else
+            mmp.shiftRoom(dir)
+        end
+    end
+end
+
+registerAnonymousEventHandler("shiftRoom","onRoom")</script>
 					<eventHandlerList>
 						<string>gmcp.Room.Info</string>
 					</eventHandlerList>
@@ -687,8 +734,7 @@ end</script>
 -- Check if current and previous room are bidirectionally connected
 function mmp.connectedRooms(cvnum, pvnum)
     cvnum = tonumber(mmp.info.vnum)
-    pvnum = tonumber(mmp.prevRoom.vnum)
-    
+    pvnum = tonumber(mmp.prevRoom.vnum) 
     local bidirConnection = false
     local exitToPrev = ""
     local exitFromPrev = ""
@@ -711,19 +757,17 @@ function mmp.connectedRooms(cvnum, pvnum)
     return bidirConnection
 end
 
-
-
 -- looks to see if there are doors in designated directions
 -- used for room comparison, can also be used for pathing purposes
-local function checkDoors(roomID, exits)
+function mmp.checkDoors(roomID, exits)
     if type(exits) == "string" then exits = {exits} end
     local statuses = {}
     local doors = getDoors(roomID)
     local dir
     for k,v in pairs(exits) do
-        dir = short[k] or short[v]
-        if table.contains({'u','d'},dir) then
-            dir = exitmap[dir]
+        dir = mmp.exitMapShort[k] or mmp.exitMapShort[v]
+        if table.contains({'Arr','Abj'},dir) then
+            dir = mmp.exitMapLong[dir]
         end
         if not doors[dir] or doors[dir] == 0 then
             return false
@@ -732,9 +776,7 @@ local function checkDoors(roomID, exits)
         end
     end
     return statuses
-end
-
-</script>
+end</script>
 					<eventHandlerList />
 				</Script>
 				<Script isActive="yes" isFolder="no">
@@ -773,17 +815,101 @@ end</script>
 
 -- list of possible movement directions and appropriate coordinate changes
 mmp.moveVectors = {
-    north = {0,1,0},
-    south = {0,-1,0},
-    east = {1,0,0},
-    west = {-1,0,0},
-    northwest = {-1,1,0},
-    northeast = {1,1,0},
-    southwest = {-1,-1,0},
-    southeast = {1,-1,0},
-    up = {0,0,1},
-    down = {0,0,-1}
-}</script>
+    norte = {0,1,0},
+    sur = {0,-1,0},
+    este = {1,0,0},
+    oeste = {-1,0,0},
+    noroeste = {-1,1,0},
+    noreste = {1,1,0},
+    suroeste = {-1,-1,0},
+    sureste = {1,-1,0},
+    Arriba = {0,0,1},
+    Abajo = {0,0,-1}
+}
+
+function mmp.makeRoom()
+    local info = mmp.info
+    local coords = {0,0,0}
+    addRoom(info.vnum)
+	  setRoomName(info.vnum, info.name)
+    local areas = getAreaTable()
+    local areaID = areas[info.area]
+    if not areaID then
+        areaID = addAreaName(info.area)
+    else
+        coords = {getRoomCoordinates(mmp.prevRoom.vnum)}
+        local shift = {0,0,0}
+        for k,v in pairs(info.exits) do
+            if v == mmp.prevRoom.vnum and moveVectors[k] then
+                shift = moveVectors[k]
+                break
+            end
+        end
+        for n = 1,3 do
+            coords[n] = coords[n] - shift[n]
+        end
+        -- map stretching
+        local overlap = getRoomsByPosition(areaID,coords[1],coords[2],coords[3])
+        if not table.is_empty(overlap) then
+            local rooms = getAreaRooms(areaID)
+            local rcoords
+            for _,id in ipairs(rooms) do
+                rcoords = {getRoomCoordinates(id)}
+                for n = 1,3 do
+                    if shift[n] ~= 0 and (rcoords[n] - coords[n]) * shift[n] &lt;= 0 then
+                        rcoords[n] = rcoords[n] - shift[n]
+                    end
+                end
+                setRoomCoordinates(id,rcoords[1],rcoords[2],rcoords[3])
+            end
+        end
+    end
+    setRoomArea(info.vnum, areaID)
+    setRoomCoordinates(info.vnum, coords[1], coords[2], coords[3])
+    -- if terrain_types[info.terrain] then
+    --     setRoomEnv(info.vnum, terrain_types[info.terrain].id)
+    -- end
+    for dir, id in pairs(info.exits) do
+        -- need to see how special exits are represented to handle those properly here
+        if getRoomName(id) then
+            setExit(info.vnum, id, dir)
+        else
+            setExitStub(info.vnum, dir, true)
+        end
+    end
+end
+
+
+function mmp.shiftRoom(dir)
+    local ID = tonumber(mmp.info.vnum)
+    local x,y,z = getRoomCoordinates(ID)
+    local x1,y1,z1 = table.unpack(moveVectors[dir])
+    x = x + x1
+    y = y + y1
+    z = z + z1
+    setRoomCoordinates(ID,x,y,z)
+    updateMap()
+end
+
+function mmp.handleMove()
+    local info = mmp.info
+    if not getRoomName(info.vnum) then
+        mmp.makeRoom()
+    else
+        local stubs = getExitStubs1(info.vnum)
+		if stubs then
+          for _, n in ipairs(stubs) do
+              local dir = mmp.exitMapLong[n]
+              local id = info.exits[dir]
+              -- need to see how special exits are represented to handle those properly here
+              if id and getRoomName(id) then
+                  setExit(info.vnum, id, dir)
+              end
+          end
+		end
+    end
+    centerview(mmp.info.vnum)
+end</script>
 					<eventHandlerList />
 				</Script>
 			</ScriptGroup>
