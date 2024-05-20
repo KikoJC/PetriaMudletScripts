@@ -443,7 +443,9 @@ end</script>
 			<name>petria</name>
 			<packageName></packageName>
 			<script> petria = petria or {}
- petria.cmd = nil</script>
+ petria.cmd = nil
+ 
+registerAnonymousEventHandler("shiftRoom","onRoom")</script>
 			<eventHandlerList />
 			<ScriptGroup isActive="yes" isFolder="yes">
 				<name>Gui</name>
@@ -661,6 +663,8 @@ petria.gmcp.fullInfo = false</script>
 local align = gmcp.Char.Worth.alignment
 local tnl = gmcp.Char.Worth.xptnl
 local gold = gmcp.Char.Worth.money
+local pquest = gmcp.Char.Worth.puntosquest
+local tquest = gmcp.Char.Worth.tiempoquest
 local con = gmcp.Char.Stats.con
 local str = gmcp.Char.Stats.str
 local dex = gmcp.Char.Stats.dex
@@ -668,26 +672,28 @@ local int = gmcp.Char.Stats.int
 local wis = gmcp.Char.Stats.wis
 local dr = gmcp.Char.Stats.damroll
 local hr = gmcp.Char.Stats.hitroll
--- local maxcon = gmcp.char.maxstats.maxcon
--- local maxstr = gmcp.char.maxstats.maxstr
--- local maxdex = gmcp.char.maxstats.maxdex
--- local maxluck = gmcp.char.maxstats.maxluck
--- local maxint = gmcp.char.maxstats.maxint
--- local maxwis = gmcp.char.maxstats.maxwis
+local permcon = gmcp.Char.Stats.permcon
+local permstr = gmcp.Char.Stats.permstr
+local permdex = gmcp.Char.Stats.permdex
+local permint = gmcp.Char.Stats.permint
+local permwis = gmcp.Char.Stats.permwis
 
 
   
 statsWindowMiniconsole:clear()
     
-statsWindowMiniconsole:echo("Str : [ "..str.."]\n")
-statsWindowMiniconsole:echo("Int : [ "..int.."]\n")
-statsWindowMiniconsole:echo("Wis : [ "..wis.."]\n")
-statsWindowMiniconsole:echo("Dex : [ "..dex.."]\n")
-statsWindowMiniconsole:echo("Con : [ "..con.."]\n")
-statsWindowMiniconsole:echo("DR  : [ "..dr.."]\n")
-statsWindowMiniconsole:echo("HR  : [ "..hr.."]\n\n")
+statsWindowMiniconsole:echo("Str : ["..permstr.."/"..str.."]\n")
+statsWindowMiniconsole:echo("Int : ["..permint.."/"..int.."]\n")
+statsWindowMiniconsole:echo("Wis : ["..permwis.."/"..wis.."]\n")
+statsWindowMiniconsole:echo("Dex : ["..permdex.."/"..dex.."]\n")
+statsWindowMiniconsole:echo("Con : ["..permcon.."/"..con.."]\n")
+statsWindowMiniconsole:echo("DR  : ["..dr.."]\n")
+statsWindowMiniconsole:echo("HR  : ["..hr.."]\n\n")
 
-statsWindowMiniconsole:cecho("Gold    : [&lt;gold&gt;"..gold.."&lt;reset&gt;]\n\n")
+statsWindowMiniconsole:cecho("Gold    : [&lt;gold&gt;"..gold.."&lt;reset&gt;]\n")
+statsWindowMiniconsole:cecho("QPuntos : ["..pquest.."]\n")
+statsWindowMiniconsole:cecho("QTiempo : ["..tquest.."]\n\n")
+
   
 statsWindowMiniconsole:echo("TNL     : [ "..tnl.."]\n")
 statsWindowMiniconsole:echo("Align   : ["..align.."]\n")
@@ -724,8 +730,7 @@ local function config()
     -- making an alias to let the user shift a room around via command line
     table.insert(mmp.aliases,tempAlias([[^shift (\w+)$]],[[raiseEvent("shiftRoom",matches[2])]]))
 	table.insert(mmp.aliases,tempAlias([[^make_room$]],[[make_room()]]))
-end
-</script>
+end</script>
 				<eventHandlerList />
 				<Script isActive="yes" isFolder="no">
 					<name>exitMap</name>
@@ -796,18 +801,16 @@ function onRoom()
         mmp.info.exits[k] = tonumber(v)
     end
     mmp.handleMove()
-        
-    if event == "shiftRoom" then
-        local dir = mmp.exitMapLong[arg[1]] or arg[1]
+    
+    local dir = mmp.exitMapLong[dir] or dir
         if not table.contains(exits, dir) then
             echo("Error: Dirección inválida '" .. dir .. "'.")
         else
             mmp.shiftRoom(dir)
         end
-    end
 end
 
-registerAnonymousEventHandler("shiftRoom","onRoom")</script>
+</script>
 					<eventHandlerList>
 						<string>gmcp.Room.Info</string>
 					</eventHandlerList>
